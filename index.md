@@ -93,7 +93,7 @@ opt-in.
 
 ## 8. Permissions
 
-The app requests **no dangerous (runtime) permissions** — no storage, camera, location, contacts, or microphone access.
+The only runtime permission the app can ask for is **camera**, and only when you tap "Take a photo" in the import studio to photograph a statement; the photo is processed on the device and is not stored by the app. It requests **no storage permission** (files and existing photos are chosen through the system file and photo pickers, which hand the app only the item you pick), and no location, contacts, or microphone access.
 
 - File access for import and backup happens through the Android system file picker (Storage Access Framework), which grants the app access only to the single file you pick, only for that operation.
 - The Android `INTERNET` permission appears in the app's manifest because the Flutter framework's build tooling includes it by default, and because the optional AI advisor described above uses it, only after you opt in, to reach the provider you configured. No other app code makes network calls.
