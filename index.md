@@ -12,7 +12,7 @@ This policy explains what MY Expense Tracker does — and does not do — with y
 - Everything you enter is stored **only on your device**, in the app's private storage.
 - There is **no account, no sign-in, no server, no cloud sync**.
 - The app has **no analytics, no crash reporting, no advertising, and no third-party tracking SDKs**.
-- The app makes **no network requests at all**. (The app contains code for an optional AI advisor and an optional cloud OCR helper, but both are switched off and unreachable in this version — see §6 and §7.) The only network activity related to the app is Google Play delivering updates, which is handled by Google, not by the app.
+- **The app itself makes no network requests.** (The app contains code for an optional AI advisor and an optional cloud OCR helper, but both are switched off and unreachable in this version — see §6 and §7.) The only network activity related to the app is Google Play delivering updates, which is handled by Google, not by the app.
 - The only way data leaves the device is when **you** choose to create a backup file or export it yourself.
 
 ## 2. What the app stores on your device
@@ -60,7 +60,7 @@ From **Profile → Data → Create backup** you can create an encrypted backup f
 
 ## 5. Files you import
 
-The Import studio lets you choose a CSV/TSV/TXT statement file through the Android file picker. The app reads the file only to build the on-screen review. It does **not** retain or upload the source file; only the rows you explicitly confirm are saved to the local database. A CSV, Excel (`.xlsx`/`.xls`) or text-layer PDF statement is always processed entirely on your device — the one exception is a photographed/screenshotted statement or a scanned (image-only) PDF, which can optionally be read by a third-party cloud OCR service instead of on-device recognition; see the next section for exactly what that involves.
+The Import studio lets you choose a CSV/TSV/TXT statement file through the Android file picker. The app reads the file only to build the on-screen review. It does **not** retain or upload the source file; only the rows you explicitly confirm are saved to the local database. A CSV, Excel (`.xlsx`/`.xls`) or text-layer PDF statement is always processed entirely on your device.
 
 ## 6. Optional cloud OCR (Mistral) — not available in this version
 
@@ -93,12 +93,12 @@ opt-in.
 
 ## 8. Permissions
 
-The only runtime permission the app can ask for is **camera**, and only when you tap "Take a photo" in the import studio to photograph a statement; the photo is processed on the device and is not stored by the app. It requests **no storage permission** (files and existing photos are chosen through the system file and photo pickers, which hand the app only the item you pick), and no location, contacts, or microphone access.
+The app declares **no runtime (dangerous) permissions** — no storage, camera, location, contacts, or microphone. "Take a photo" in the import studio opens the system camera app, which hands back only the single photo you took; files and existing photos come through the system file and photo pickers, which likewise hand the app only the item you pick.
 
 - File access for import and backup happens through the Android system file picker (Storage Access Framework), which grants the app access only to the single file you pick, only for that operation.
-- The Android `INTERNET` permission appears in the app's manifest because the Flutter framework's build tooling includes it by default, and because the optional AI advisor described above uses it, only after you opt in, to reach the provider you configured. No other app code makes network calls.
+- `INTERNET` and `ACCESS_NETWORK_STATE` are merged into the manifest by the on-device text-recognition library (Google ML Kit, whose model is bundled with the app, not downloaded). No code in this version uses them.
 
-## 8. Deleting your data
+## 9. Deleting your data
 
 Because there is no copy anywhere else, deleting your data is entirely in your hands:
 
@@ -108,11 +108,11 @@ Because there is no copy anywhere else, deleting your data is entirely in your h
 
 No deletion request to the developer is necessary or possible, because the developer holds nothing.
 
-## 9. Children
+## 10. Children
 
 The app is a personal-finance tool intended for adults and is not directed at children under 18. It does not knowingly collect any information from anyone, including children.
 
-## 10. Changes to this policy
+## 11. Changes to this policy
 
 If the app gains features that change how data is handled (for example optional cloud backup to a provider you connect), this policy will be updated before that feature is released, with a new effective date at the top. The current version is always published at:
 
@@ -120,6 +120,6 @@ If the app gains features that change how data is handled (for example optional 
 
 (published from the public repository `HooiTeikLee/MYExpenseTracker-privacy`).
 
-## 11. Contact
+## 12. Contact
 
 Questions about this policy: **jacklee.htlee@gmail.com**
